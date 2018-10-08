@@ -7,27 +7,30 @@ if (is.installed("ape"))
   library(ape)
 }
 
+
+options(shiny.launch.browser = T)
+
 ## Only run examples in interactive R sessions
 if (interactive()) {
 
   ui <- fluidPage(
-    fileInput("file1", "Load Tree File in Newick format",
+    fileInput("file1", "Load Tree File in Newick Format",
               accept = c(
                 "text",
                 "tre",
-                ".tree")),
+                "tree")),
     tags$hr(),
-    fileInput("file2", "Load CSV naming File",
+    fileInput("file2", "Load .csv Naming File",
               accept = c(
                 "text/csv",
                 "text/comma-separated-values,text/plain",
                 ".csv")),
     checkboxInput("header", "Headers", TRUE),
     tags$hr(),
-    selectInput("seperator", "Seperator", c(";",","), , multiple = FALSE,
+    selectInput("seperator", "Seperator", c(";",","), multiple = FALSE,
                 selectize = TRUE, width = "50px", size = NULL),
     tags$hr(),
-    downloadButton("downloadData", "Download")
+    downloadButton("downloadData", "Download Renamed Tree")
 
   )
 
