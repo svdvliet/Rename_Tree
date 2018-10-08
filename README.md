@@ -9,3 +9,9 @@ Package will be installed if not in `installed.packages`
 
 Renaming file must consist of two columns, first one being identical to current names in tree.
 Second column will be the new names. Also "rename" the names you want to keep otherwise they will be renamed to `NA`
+
+# Usage:
+
+```r
+runGitHub("Rename_Tree", "svdvliet")
+```
