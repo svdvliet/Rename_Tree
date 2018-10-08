@@ -1,3 +1,5 @@
+
+# Check if Package "ape" is installed otherwise install
 is.installed <- function(checkinstall) is.element(checkinstall, installed.packages()[,1])
 if (is.installed("ape"))
 {
@@ -5,17 +7,18 @@ if (is.installed("ape"))
   install.packages("ape")
 }
 
-
+# Set option to open app in browser window
 options(shiny.launch.browser = T)
 
 ## Only run examples in interactive R sessions
 if (interactive()) {
 
-  fluidRow(
-    column( width = 12,
-
-
   ui <- fluidPage(
+
+    fluidRow(
+      column( width = 12,
+
+
     fileInput("file1", "Load Tree File in Newick Format",
               accept = c(
                 "text",
@@ -32,7 +35,7 @@ if (interactive()) {
     selectInput("seperator", "Seperator", c(";",","), multiple = FALSE,
                 selectize = TRUE, width = "50px", size = NULL),
     tags$hr(),
-    downloadButton("downloadData", "Download Renamed Tree")
+    uiOutput("download")
 
   )
   )
@@ -54,11 +57,16 @@ if (interactive()) {
         })
 
 
-
+      output$download <- renderUI({
+        if(!is.null(input$file1) & !is.null(input$file2)) {
+          downloadButton("downloadData", "Download Renamed Tree")
+        }
+      })
 
     output$downloadData <- downloadHandler(
+
       filename = function() {
-        basename(input$file1$datapath)
+        basename(input$file1$name)
       },
       content = function(file) {
         ape::write.tree(values$tree, file)
